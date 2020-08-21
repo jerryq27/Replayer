@@ -7,7 +7,8 @@
       v-on:handleEvent="handleEvent"/>
     <Seekbar
       v-bind:duration="duration"
-      v-bind:currentTime="currentTime"/>
+      v-bind:currentTime="currentTime"
+      v-bind:handleSeek="handleSeek"/>
 
   </div>
 </template>
@@ -69,6 +70,18 @@ export default {
       }
       else if(event == 'next') {
         this.next();
+      }
+    },
+    handleSeek: function(value) {
+      let shouldResume = this.isPlaying;
+      if(this.isPlaying) {
+        this.pause();
+        this.isPlaying = false;
+      }
+      this.player.fastSeek(value);
+      if(shouldResume) {
+        this.play();
+        this.isPlaying = true;
       }
     },
     play: function() {

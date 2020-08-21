@@ -2,26 +2,13 @@
   
   <div>
       <p class="time">{{ updateCurrentTime() }} - {{ formatDuration }}</p>
-      <b-form-input
+      <b-input
         class="seekbar"
         type="range"
-        v-bind:value="currentTime"
-        v-bind:max="duration">
-      </b-form-input>
-
-      <!-- <div class="seekbar">
-          <div
-            v-bind:style="fill"
-            class="seekbar-fill">
-          </div>
-          <div
-            class="seekbar-thumb"
-            v-bind:style="thumb"
-            v-on:mousedown="startScrub"
-            v-on:mouseup="endScrub">
-          </div>
-          <div class="seekbar-length"></div>
-      </div> -->
+        v-model="computedTimeFromProps"
+        v-bind:max="duration"
+        v-on:change="seek">
+      </b-input>
   </div>
 
 </template>
@@ -42,7 +29,8 @@ export default {
             },
             thumb: {
                 left: '0%'
-            }
+            },
+            ctime: this.currentTime,
         }
     },
     computed: {
@@ -56,6 +44,9 @@ export default {
                 return `${min}:0${sec}`;
             else
                 return `${min}:${sec}`;
+        },
+        computedTimeFromProps: function() {
+            return this.ctime;
         }
     },
     methods: {
@@ -77,13 +68,11 @@ export default {
             else
                 return `${min}:${sec}`;
         },
-        startScrub: function(event) {
-            console.log(event);
-        },
-        endScrub: function(event) {
-            console.log(event);
+        seek: function(value) {
+            console.log(value);
+            this.$emit('handleSeek', value);
         }
-    }
+    },
 }
 </script>
 
@@ -95,5 +84,9 @@ export default {
 .seekbar {
     width: 80%;
     margin: auto;
+}
+
+.seekbar.slider-track-low {
+    background: lightblue;
 }
 </style>
