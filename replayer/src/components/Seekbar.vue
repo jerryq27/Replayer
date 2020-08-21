@@ -2,7 +2,14 @@
   
   <div>
       <p class="time">{{ updateCurrentTime() }} - {{ formatDuration }}</p>
-      <div class="seekbar">
+      <b-form-input
+        class="seekbar"
+        type="range"
+        v-bind:value="currentTime"
+        v-bind:max="duration">
+      </b-form-input>
+
+      <!-- <div class="seekbar">
           <div
             v-bind:style="fill"
             class="seekbar-fill">
@@ -14,7 +21,7 @@
             v-on:mouseup="endScrub">
           </div>
           <div class="seekbar-length"></div>
-      </div>
+      </div> -->
   </div>
 
 </template>
@@ -86,36 +93,7 @@ export default {
 }
 
 .seekbar {
-    height: 20px;
     width: 80%;
     margin: auto;
-    position: relative;
-}
-
-.seekbar-fill {
-    height: 90%;
-    width: 0%;
-    background: lightgreen;
-    position: absolute;
-}
-
-.seekbar-length {
-    height: 90%;
-    width: 100%;
-    background: gray;
-}
-
-.seekbar-thumb {
-    height: 100%;
-    width: 5%;
-    border-radius: 50%;
-    bottom: 5%;
-    border: solid whitesmoke 1px;
-    position: absolute;
-    background: green;
-}
-
-.seekbar-thumb:hover {
-    cursor: pointer;
 }
 </style>
