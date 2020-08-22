@@ -8,7 +8,8 @@
       v-on:handleEvent="handleEvent"/>
     <RangeSeekbar
       v-if="creatingRange"
-      v-bind:time="time"/>
+      v-bind:time="time"
+      v-on:updateRange="updateRange"/>
     <Seekbar
       v-else
       v-bind:time="time"
@@ -30,6 +31,11 @@ export default {
       isPlaying: false,
       currentIndex: 0,
       creatingRange: false,
+      currentRange: {
+        min: 0,
+        max: 0,
+      },
+      ranges: [],
       time: {
         currentTime: 0,
         duration: 0,
@@ -66,7 +72,10 @@ export default {
       replayer.time.duration = this.duration;
     });
     this.player.addEventListener('timeupdate', function() {
-      replayer.currentTime = this.currentTime;
+      if(replayer.creatingRange && this.currentTime >= replayer.currentRange.max) {
+        this.currentTime = replayer.currentRange.min;
+        replayer.time.currentTime = replayer.currentRange.min;
+      }
       replayer.time.currentTime = this.currentTime;
     });
   },
@@ -86,6 +95,8 @@ export default {
       }
     },
     play: function() {
+      if(this.creatingRange)
+        this.seekTo(this.currentRange.min);
       this.player.play()
       this.isPlaying = true;
     },
@@ -116,11 +127,14 @@ export default {
     },
     seekTo: function(time) {
       // this.player.fastSeek(time);
-      // this.pause();
       this.player.currentTime = time;
       this.time.currenttime = time;
-      // this.play();
-    }
+    },
+    updateRange: function(value) {
+      console.log(value);
+      this.currentRange.min = value.min;
+      this.currentRange.max = value.max;
+    },
   },
   components: {
     SongInfo,

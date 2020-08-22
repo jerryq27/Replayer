@@ -53,7 +53,7 @@ export default {
         updateRange: function(value) {
             this.range.min = value.min;
             this.range.max = value.max;
-            console.log(this.range);
+            this.$emit('updateRange', value);
         }
     }
 }
