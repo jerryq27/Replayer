@@ -1,14 +1,12 @@
 <template>
   
   <div>
-      <p class="time">{{ updateCurrentTime() }} - {{ formatDuration }}</p>
-      <b-input
-        class="seekbar"
-        type="range"
-        v-model="computedTimeFromProps"
-        v-bind:max="duration"
-        v-on:change="seek">
-      </b-input>
+      <p id="time">{{ updateCurrentTime() }} - {{ formatDuration }}</p>
+      <div id="seekbar">
+          <div id="length"></div>
+          <div id="fill" v-bind:style="styles.fill"></div>
+          <div id="thumb"></div>
+      </div>
   </div>
 
 </template>
@@ -24,13 +22,14 @@ export default {
         return {
             durationString: '',
             currentTimeString: '',
-            fill: {
-                width: '0%'
-            },
-            thumb: {
-                left: '0%'
-            },
-            ctime: this.currentTime,
+            styles: {
+                fill: {
+                    background: 'lightgreen',
+                    position: 'relative',
+                    height: '5px',
+                    width: '0px'
+                }
+            }
         }
     },
     computed: {
@@ -44,9 +43,6 @@ export default {
                 return `${min}:0${sec}`;
             else
                 return `${min}:${sec}`;
-        },
-        computedTimeFromProps: function() {
-            return this.ctime;
         }
     },
     methods: {
@@ -54,12 +50,8 @@ export default {
             let min = Math.floor(this.currentTime/60);
             let sec = Math.floor(this.currentTime%60);
 
-            let position = this.currentTime * 100 / this.duration;
-        
-            if(position < 100) {
-                this.fill.width = position + '%';
-                this.thumb.left = (position - 2) + "%";
-            }
+            this.styles.fill.width = Math.floor((this.currentTime * 100) / this.duration)+ '%';
+            console.log(this.currentTime);
 
             if(sec >= 60)
                 sec = 0;
@@ -67,26 +59,18 @@ export default {
                 return `${min}:0${sec}`;
             else
                 return `${min}:${sec}`;
-        },
-        seek: function(value) {
-            console.log(value);
-            this.$emit('handleSeek', value);
         }
-    },
+    }
 }
 </script>
 
 <style>
-.debug-box {
-    border: solid red 1px;
+#length {
+    background: gray;
+    padding: 5px;
 }
 
-.seekbar {
-    width: 80%;
-    margin: auto;
-}
-
-.seekbar.slider-track-low {
-    background: lightblue;
+#thumb {
+    background: green;
 }
 </style>
