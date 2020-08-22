@@ -4,6 +4,9 @@
       <div class="seekbar-container">
         <q-range
             color="green"
+            label
+            v-bind:left-label-value="startTimeFormat"
+            v-bind:right-label-value="endTimeFormat"
             v-bind:min="0"
             v-bind:max="time.duration"
             v-model="range"
