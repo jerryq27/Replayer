@@ -7,8 +7,8 @@
       v-on:handleEvent="handleEvent"/>
     <Seekbar
       v-bind:duration="duration"
-      v-bind:currentTime="currentTime"/>
-
+      v-bind:currentTime="currentTime"
+      v-on:seekTo="seekTo"/>
   </div>
 </template>
 
@@ -99,6 +99,15 @@ export default {
         this.currentIndex = 0;
       }
       this.player.src = this.songs[this.currentIndex].src;
+    },
+    seekTo: function(time) {
+      console.log(time);
+      console.log(this.player.readyState);
+      // this.player.fastSeek(time);
+      this.pause();
+      this.player.currentTime = time;
+      this.currenttime = time;
+      this.play();
     }
   },
   components: {
