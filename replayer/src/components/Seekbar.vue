@@ -11,7 +11,6 @@
             v-bind:max="duration"/>
       </div>
       <span class="time">{{ formatDuration }}</span>
-
   </div>
 
 </template>
@@ -76,6 +75,6 @@ export default {
     display: inline-block;
     position: relative;
     bottom: 15px;
-    margin: 0 5px;
+    margin: 0 15px;
 }
 </style>

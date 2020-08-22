@@ -17,6 +17,12 @@
         v-on:click="informEvent('next')">
           Next
       </button>
+
+      <button 
+        id="create"
+        v-on:click="informEvent('create')">
+          {{ creatingRange? "Exit" : "Create Range" }}
+      </button>
   </div>
 </template>
 
@@ -25,6 +31,7 @@ export default {
     name: 'PlayerControls',
     props: {
         isPlaying: Boolean,
+        creatingRange: Boolean,
     },
     methods: {
         informEvent: function(event) {

@@ -4,8 +4,14 @@
     <SongInfo v-bind:song="songs[currentIndex]"/>
     <PlayerControls
       v-bind:isPlaying="isPlaying"
+      v-bind:creatingRange="creatingRange"
       v-on:handleEvent="handleEvent"/>
+    <RangeSeekbar
+      v-if="creatingRange"
+      v-bind:duration="duration"
+      v-bind:currentTime="currentTime"/>
     <Seekbar
+      v-else
       v-bind:duration="duration"
       v-bind:currentTime="currentTime"
       v-on:seekTo="seekTo"/>
@@ -14,8 +20,9 @@
 
 <script>
 import SongInfo from './components/SongInfo';
-import PlayerControls from './components/PlayerControls'
-import Seekbar from './components/Seekbar'
+import PlayerControls from './components/PlayerControls';
+import Seekbar from './components/Seekbar';
+import RangeSeekbar from './components/RangeSeekbar';
 
 export default {
   name: 'App',
@@ -26,6 +33,7 @@ export default {
       currentIndex: 0,
       duration: 0,
       currentTime: 0,
+      creatingRange: false,
       songs: [
         {
           artist: 'Scott Holmes',
@@ -69,6 +77,9 @@ export default {
       }
       else if(event == 'next') {
         this.next();
+      }
+      else if(event == 'create') {
+        this.creatingRange = !this.creatingRange;
       }
     },
     play: function() {
@@ -114,6 +125,7 @@ export default {
     SongInfo,
     PlayerControls,
     Seekbar,
+    RangeSeekbar,
   },
 }
 </script>
