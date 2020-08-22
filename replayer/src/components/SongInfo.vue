@@ -1,7 +1,7 @@
 <template>
   
   <div id="details">
-    <img v-bind:src="song.img" alt="">
+    <img class="album-art" v-bind:src="song.img" alt="">
     <p id="artist-song">{{ song.artist }} - {{ song.title }}</p>
   </div>
 
@@ -17,5 +17,8 @@ export default {
 </script>
 
 <style>
-
+.album-art {
+  width: 250px;
+  height: 250px;
+}
 </style>
