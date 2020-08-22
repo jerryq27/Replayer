@@ -5,10 +5,10 @@
       <div class="seekbar-container">
         <q-slider
             v-on:change="informSeek"
-            v-bind:value="currentTime"
+            v-bind:value="time.currentTime"
             v-bind:step="stepVal"
             v-bind:min="0"
-            v-bind:max="duration"/>
+            v-bind:max="time.duration"/>
       </div>
       <span class="time">{{ formatDuration }}</span>
   </div>
@@ -19,20 +19,17 @@
 export default {
     name: 'Seekbar',
     props: {
-        duration: Number,
-        currentTime: Number,
+        time: Object,
     },
     data: function() {
         return {
-            durationString: '',
-            currentTimeString: '',
             stepVal: 0.1,
         }
     },
     computed: {
         formatDuration: function() {
-            let min = Math.floor(this.duration/60);
-            let sec = Math.floor(this.duration%60);
+            let min = Math.floor(this.time.duration/60);
+            let sec = Math.floor(this.time.duration%60);
 
             if(sec >= 60) sec = 0;
             
@@ -42,8 +39,8 @@ export default {
     },
     methods: {
         updateCurrentTime: function() {
-            let min = Math.floor(this.currentTime/60);
-            let sec = Math.floor(this.currentTime%60);
+            let min = Math.floor(this.time.currentTime/60);
+            let sec = Math.floor(this.time.currentTime%60);
 
             if(sec >= 60)
                 sec = 0;

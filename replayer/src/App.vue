@@ -8,12 +8,10 @@
       v-on:handleEvent="handleEvent"/>
     <RangeSeekbar
       v-if="creatingRange"
-      v-bind:duration="duration"
-      v-bind:currentTime="currentTime"/>
+      v-bind:time="time"/>
     <Seekbar
       v-else
-      v-bind:duration="duration"
-      v-bind:currentTime="currentTime"
+      v-bind:time="time"
       v-on:seekTo="seekTo"/>
   </div>
 </template>
@@ -31,9 +29,11 @@ export default {
       player: new Audio(),
       isPlaying: false,
       currentIndex: 0,
-      duration: 0,
-      currentTime: 0,
       creatingRange: false,
+      time: {
+        currentTime: 0,
+        duration: 0,
+      },
       songs: [
         {
           artist: 'Scott Holmes',
@@ -58,13 +58,16 @@ export default {
   },
   created: function() {
     this.player.src = this.songs[this.currentIndex].src;
+    this.player.volume = 0.4;
 
     let replayer = this;
     this.player.addEventListener('loadeddata', function() {
       replayer.duration = this.duration;
+      replayer.time.duration = this.duration;
     });
     this.player.addEventListener('timeupdate', function() {
       replayer.currentTime = this.currentTime;
+      replayer.time.currentTime = this.currentTime;
     });
   },
   methods: {
@@ -112,13 +115,11 @@ export default {
       this.player.src = this.songs[this.currentIndex].src;
     },
     seekTo: function(time) {
-      console.log(time);
-      console.log(this.player.readyState);
       // this.player.fastSeek(time);
-      this.pause();
+      // this.pause();
       this.player.currentTime = time;
-      this.currenttime = time;
-      this.play();
+      this.time.currenttime = time;
+      // this.play();
     }
   },
   components: {
