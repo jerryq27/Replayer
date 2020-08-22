@@ -1,19 +1,16 @@
 <template>
   <div>
-      <span class="time">{{ updateCurrentTime() }}</span>
+      <span class="time">{{ startTimeFormat }}</span>
       <div class="seekbar-container">
-        <!-- <q-slider
-            v-on:change="informSeek"
-            v-bind:value="currentTime"
-            v-bind:step="stepVal"
+        <q-range
+            color="green"
             v-bind:min="0"
-            v-bind:max="duration"/> -->
-            <q-range
-                v-bind:min="0"
-                v-bind:max="duration"
-                v-bind:step="stepVal"/>
+            v-bind:max="time.duration"
+            v-model="range"
+            v-bind:step="stepVal"
+            v-on:change="updateRange"/>
       </div>
-      <span class="time">{{ formatDuration }}</span>
+      <span class="time">{{ endTimeFormat }}</span>
   </div>
 </template>
 
@@ -21,39 +18,43 @@
 export default {
     name: 'RangeSeekbar',
     props: {
-        duration: Number,
-        currentTime: Number,
+        time: Object,
     },
     data: function() {
         return {
-            durationString: '',
-            currentTimeString: '',
+            range: {
+                min: 0,
+                max: this.time.duration,
+            },
             stepVal: 0.1,
         }
     },
+    created: function() {
+        // this.range.max = this.duration;
+    },
     computed: {
-        formatDuration: function() {
-            let min = Math.floor(this.duration/60);
-            let sec = Math.floor(this.duration%60);
+        startTimeFormat: function() {
+            return this.formatTime(this.range.min);
+        },
+        endTimeFormat: function() {
+            return this.formatTime(this.range.max);
+        }
+    },
+    methods: {
+        formatTime: function(time) {
+            let min = Math.floor(time/60);
+            let sec = Math.floor(time%60);
 
             if(sec >= 60) sec = 0;
             
             if(sec < 10) return `${min}:0${sec}`;
             else return `${min}:${sec}`;
-        }
-    },
-    methods: {
-        updateCurrentTime: function() {
-            let min = Math.floor(this.currentTime/60);
-            let sec = Math.floor(this.currentTime%60);
-
-            if(sec >= 60)
-                sec = 0;
-            if(sec < 10)
-                return `${min}:0${sec}`;
-            else
-                return `${min}:${sec}`;
         },
+        updateRange: function(value) {
+            this.range.min = value.min;
+            this.range.max = value.max;
+            console.log(this.range);
+        }
     }
 }
 </script>
