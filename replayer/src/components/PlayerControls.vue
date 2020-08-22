@@ -2,7 +2,8 @@
   <div id="controls">
       <button
         id="prev"
-        v-on:click="informEvent('prev')">
+        v-on:click="informEvent('prev')"
+        v-bind:disabled="creatingRange">
           Prev
       </button>
 
@@ -14,7 +15,8 @@
 
       <button
         id="next"
-        v-on:click="informEvent('next')">
+        v-on:click="informEvent('next')"
+        v-bind:disabled="creatingRange">
           Next
       </button>
 
