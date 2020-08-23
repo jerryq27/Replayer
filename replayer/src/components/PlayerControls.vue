@@ -1,17 +1,20 @@
 <template>
 
   <q-card-actions align="center">
-    <button v-on:click="informEvent('prev')">
-        Prev
-    </button>
 
-    <button v-on:click="informEvent('play-pause')">
-        {{ isPlaying? "Pause" : "Play" }}
-    </button>
+    <q-btn outline round icon="skip_previous"
+      v-bind:color="tab === 'playing-music'? 'primary' : 'green'"
+      v-on:click="informEvent('prev')"/>
 
-    <button v-on:click="informEvent('next')">
-        Next
-    </button>
+    <q-btn outline round size="lg"
+      v-bind:icon="isPlaying? 'pause' : 'play_arrow'"
+      v-bind:color="tab === 'playing-music'? 'primary' : 'green'"
+      v-on:click="informEvent('play-pause')"/>
+
+    <q-btn outline round icon="skip_next"
+      v-bind:color="tab === 'playing-music'? 'primary' : 'green'"
+      v-on:click="informEvent('next')"/>
+
   </q-card-actions>
 
 </template>
