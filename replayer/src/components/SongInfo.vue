@@ -19,8 +19,5 @@ export default {
 </script>
 
 <style>
-/* .album-art {
-  width: 250px;
-  height: 250px;
-} */
+
 </style>
