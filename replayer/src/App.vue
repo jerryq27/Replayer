@@ -1,19 +1,41 @@
 <template>
   <div id="app">
+  <q-layout view="hhh lpR fFf">
 
-    <SongInfo v-bind:song="songs[currentIndex]"/>
-    <PlayerControls
-      v-bind:isPlaying="isPlaying"
-      v-bind:creatingRange="creatingRange"
-      v-on:handleEvent="handleEvent"/>
-    <RangeSeekbar
-      v-if="creatingRange"
-      v-bind:time="time"
-      v-on:updateRange="updateRange"/>
-    <Seekbar
-      v-else
-      v-bind:time="time"
-      v-on:seekTo="seekTo"/>
+    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <!-- <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          </q-avatar> -->
+          Replayer
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container class="debug-box row justify-center">
+
+      <q-card class="content-card size">
+        <SongInfo class="debug-box" v-bind:song="songs[currentIndex]"/>
+
+        <PlayerControls class="debug-box"
+          v-bind:isPlaying="isPlaying"
+          v-bind:creatingRange="creatingRange"
+          v-on:handleEvent="handleEvent"/>
+
+        <RangeSeekbar
+          v-if="creatingRange"
+          v-bind:time="time"
+          v-on:updateRange="updateRange"/>
+        <Seekbar class="debug-box"
+          v-else
+          v-bind:time="time"
+          v-on:seekTo="seekTo"/>
+      </q-card>
+
+    </q-page-container>
+
+  </q-layout>
   </div>
 </template>
 
@@ -146,12 +168,12 @@ export default {
 </script>
 
 <style>
-#app {
+.size { width: 20%; height:40%;}
+.debug-box { border: red solid 1px; }
+.content {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

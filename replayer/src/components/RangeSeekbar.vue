@@ -1,7 +1,8 @@
 <template>
-  <div>
-      <span class="time">{{ startTimeFormat }}</span>
-      <div class="seekbar-container">
+
+    <q-card-section>
+        <span>{{ startTimeFormat }}</span>
+        <div>
         <q-range
             color="green"
             label
@@ -12,9 +13,10 @@
             v-model="range"
             v-bind:step="stepVal"
             v-on:change="updateRange"/>
-      </div>
-      <span class="time">{{ endTimeFormat }}</span>
-  </div>
+        </div>
+        <span>{{ endTimeFormat }}</span>
+    </q-card-section>
+
 </template>
 
 <script>

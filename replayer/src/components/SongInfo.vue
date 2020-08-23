@@ -1,10 +1,12 @@
 <template>
-  
-  <div id="details">
-    <img class="album-art" v-bind:src="song.img" alt="">
-    <p id="artist-song">{{ song.artist }} - {{ song.title }}</p>
-  </div>
 
+  <q-img v-bind:src="song.img">
+    <div class="absolute-bottom">
+      <div class="text-h6">{{ song.title }}</div>
+      <div class="text-subtitle2">{{ song.artist }}</div>
+    </div>
+  </q-img>
+  
 </template>
 
 <script>
@@ -17,8 +19,8 @@ export default {
 </script>
 
 <style>
-.album-art {
+/* .album-art {
   width: 250px;
   height: 250px;
-}
+} */
 </style>

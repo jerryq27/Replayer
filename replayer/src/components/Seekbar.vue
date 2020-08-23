@@ -1,18 +1,16 @@
 <template>
-  
-  <div>
-      <span class="time">{{ updateCurrentTime() }}</span>
-      <div class="seekbar-container">
-        <q-slider
-            v-on:change="informSeek"
-            v-bind:value="time.currentTime"
-            v-bind:step="stepVal"
-            v-bind:min="0"
-            v-bind:max="time.duration"/>
-      </div>
-      <span class="time">{{ formatDuration }}</span>
-  </div>
 
+  <q-card-section>
+    <span>{{ updateCurrentTime() }}</span>
+      <q-slider
+        v-on:change="informSeek"
+        v-bind:value="time.currentTime"
+        v-bind:step="stepVal"
+        v-bind:min="0"
+        v-bind:max="time.duration"/>
+    <span>{{ formatDuration }}</span>
+  </q-card-section>
+  
 </template>
 
 <script>
@@ -57,7 +55,7 @@ export default {
 </script>
 
 <style>
-.debug-box {
+/* .debug-box {
     border: solid red 1px;
 }
 
@@ -73,5 +71,5 @@ export default {
     position: relative;
     bottom: 15px;
     margin: 0 15px;
-}
+} */
 </style>
