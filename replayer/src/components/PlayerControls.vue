@@ -1,26 +1,16 @@
 <template>
 
   <q-card-actions align="center">
-    <button
-      v-on:click="informEvent('prev')"
-      v-bind:disabled="creatingRange">
+    <button v-on:click="informEvent('prev')">
         Prev
     </button>
 
-    <button
-      v-on:click="informEvent('play-pause')">
+    <button v-on:click="informEvent('play-pause')">
         {{ isPlaying? "Pause" : "Play" }}
     </button>
 
-    <button
-      v-on:click="informEvent('next')"
-      v-bind:disabled="creatingRange">
+    <button v-on:click="informEvent('next')">
         Next
-    </button>
-
-    <button 
-      v-on:click="informEvent('create')">
-        {{ creatingRange? "Exit" : "Create Range" }}
     </button>
   </q-card-actions>
 
@@ -31,7 +21,7 @@ export default {
     name: 'PlayerControls',
     props: {
         isPlaying: Boolean,
-        creatingRange: Boolean,
+        tab: String,
     },
     methods: {
         informEvent: function(event) {
