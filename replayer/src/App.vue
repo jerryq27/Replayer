@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
   <q-layout view="hhh lpR fFf">
 
@@ -13,12 +14,12 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="debug-box row justify-center">
+    <q-page-container class="row justify-center">
+      <q-card class="content-card col-xs-12 col-sm-8 col-md-4">
 
-      <q-card class="content-card size">
-        <SongInfo class="debug-box" v-bind:song="songs[currentIndex]"/>
+        <SongInfo v-bind:song="songs[currentIndex]"/>
 
-        <PlayerControls class="debug-box"
+        <PlayerControls
           v-bind:isPlaying="isPlaying"
           v-bind:creatingRange="creatingRange"
           v-on:handleEvent="handleEvent"/>
@@ -27,16 +28,17 @@
           v-if="creatingRange"
           v-bind:time="time"
           v-on:updateRange="updateRange"/>
-        <Seekbar class="debug-box"
+        <Seekbar
           v-else
           v-bind:time="time"
           v-on:seekTo="seekTo"/>
-      </q-card>
 
+      </q-card>
     </q-page-container>
 
   </q-layout>
   </div>
+
 </template>
 
 <script>
@@ -168,12 +170,9 @@ export default {
 </script>
 
 <style>
-.size { width: 20%; height:40%;}
-.debug-box { border: red solid 1px; }
-.content {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+.content-card {
+  width: 20%;
+  height:40%;
 }
+.debug-box { border: red solid 1px; }
 </style>
