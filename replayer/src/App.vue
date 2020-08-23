@@ -19,19 +19,33 @@
 
         <SongInfo v-bind:song="songs[currentIndex]"/>
 
-        <PlayerControls
-          v-bind:isPlaying="isPlaying"
-          v-bind:creatingRange="creatingRange"
-          v-on:handleEvent="handleEvent"/>
+        <q-tabs v-model="tab" narrow-indicator dense>
+          <q-tab name="playing-music" icon="play_circle_outlined"/>
+          <q-tab name="creating-range" icon="loop"/>
+        </q-tabs>
+        <q-tab-panels v-model="tab" animated>
 
-        <RangeSeekbar
-          v-if="creatingRange"
-          v-bind:time="time"
-          v-on:updateRange="updateRange"/>
-        <Seekbar
-          v-else
-          v-bind:time="time"
-          v-on:seekTo="seekTo"/>
+          <q-tab-panel name="playing-music">
+            <PlayerControls
+              v-bind:isPlaying="isPlaying"
+              v-bind:tab="tab"
+              v-on:handleEvent="handleEvent"/>
+            <Seekbar
+              v-bind:time="time"
+              v-on:seekTo="seekTo"/>
+          </q-tab-panel>
+
+          <q-tab-panel name="creating-range">
+            <PlayerControls
+              v-bind:isPlaying="isPlaying"
+              v-bind:tab="tab"
+              v-on:handleEvent="handleEvent"/>
+            <RangeSeekbar
+              v-bind:time="time"
+              v-on:updateRange="updateRange"/>
+          </q-tab-panel>
+
+        </q-tab-panels>
 
       </q-card>
     </q-page-container>
@@ -55,6 +69,7 @@ export default {
       isPlaying: false,
       currentIndex: 0,
       creatingRange: false,
+      tab: "playing-music",
       currentRange: {
         min: 0,
         max: 0,
