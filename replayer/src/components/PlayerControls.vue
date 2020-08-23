@@ -1,6 +1,6 @@
 <template>
 
-  <q-card-actions>
+  <q-card-actions align="center">
     <button
       v-on:click="informEvent('prev')"
       v-bind:disabled="creatingRange">
