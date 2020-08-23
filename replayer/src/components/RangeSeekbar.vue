@@ -1,9 +1,8 @@
 <template>
 
-    <q-card-section>
-        <span>{{ startTimeFormat }}</span>
-        <div>
-        <q-range
+    <q-card-section class="row">
+        <span class="col-xs-1 col-sm-2 text-center q-pr-sm">{{ startTimeFormat }}</span>
+        <q-range class="col-xs-10 col-sm-8"
             color="green"
             label
             v-bind:left-label-value="startTimeFormat"
@@ -13,8 +12,7 @@
             v-model="range"
             v-bind:step="stepVal"
             v-on:change="updateRange"/>
-        </div>
-        <span>{{ endTimeFormat }}</span>
+        <span class="col-xs-1 col-sm-2 text-center q-pl-sm">{{ endTimeFormat }}</span>
     </q-card-section>
 
 </template>

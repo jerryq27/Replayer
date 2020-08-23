@@ -1,14 +1,14 @@
 <template>
 
-  <q-card-section>
-    <span>{{ updateCurrentTime() }}</span>
-      <q-slider
+  <q-card-section class="row">
+    <span class="col-xs-1 col-sm-2 text-center q-pr-sm">{{ updateCurrentTime() }}</span>
+    <q-slider class="col-xs-10 col-sm-8"
         v-on:change="informSeek"
         v-bind:value="time.currentTime"
         v-bind:step="stepVal"
         v-bind:min="0"
         v-bind:max="time.duration"/>
-    <span>{{ formatDuration }}</span>
+    <span class="col-xs-1 col-sm-2 text-center q-pl-sm">{{ formatDuration }}</span>
   </q-card-section>
   
 </template>
@@ -55,21 +55,5 @@ export default {
 </script>
 
 <style>
-/* .debug-box {
-    border: solid red 1px;
-}
 
-.seekbar-container {
-    width: 80%;
-    margin: auto;
-    display: inline-block;
-}
-
-
-.time {
-    display: inline-block;
-    position: relative;
-    bottom: 15px;
-    margin: 0 15px;
-} */
 </style>
