@@ -68,7 +68,6 @@ export default {
       player: new Audio(),
       isPlaying: false,
       currentIndex: 0,
-      creatingRange: false,
       tab: "playing-music",
       currentRange: {
         min: 0,
@@ -111,10 +110,11 @@ export default {
       replayer.time.duration = this.duration;
     });
     this.player.addEventListener('timeupdate', function() {
-      if(replayer.creatingRange && this.currentTime >= replayer.currentRange.max) {
-        this.currentTime = replayer.currentRange.min;
-        replayer.time.currentTime = replayer.currentRange.min;
-      }
+      if(replayer.tab === 'creating-range') {
+        if(this.currentTime >= replayer.currentRange.max) {
+          replayer.time.currentTime = this.currentTime = replayer.currentRange.min;
+        }
+      } 
       replayer.time.currentTime = this.currentTime;
     });
   },
@@ -129,12 +129,9 @@ export default {
       else if(event == 'next') {
         this.next();
       }
-      else if(event == 'create') {
-        this.creatingRange = !this.creatingRange;
-      }
     },
     play: function() {
-      if(this.creatingRange)
+      if(this.tab === "creating-range")
         this.seekTo(this.currentRange.min);
       this.player.play()
       this.isPlaying = true;
