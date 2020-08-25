@@ -22,6 +22,7 @@ export default {
     name: 'RangeSeekbar',
     props: {
         time: Object,
+        currentIndex: Number,
     },
     data: function() {
         return {
@@ -42,6 +43,15 @@ export default {
         endTimeFormat: function() {
             return this.formatTime(this.range.max);
         }
+    },
+    watch: {
+        currentIndex: {
+            handler: function(newIndex, oldIndex) {
+                console.log(`Updated: ${JSON.stringify(newIndex)} -> ${JSON.stringify(oldIndex)}`);
+                this.range.min = 0;
+                this.range.max = this.time.duration;
+            }
+        },
     },
     methods: {
         formatTime: function(time) {
