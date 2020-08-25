@@ -42,6 +42,7 @@
               v-on:handleEvent="handleEvent"/>
             <RangeSeekbar
               v-bind:time="time"
+              v-bind:currentIndex="currentIndex"
               v-on:updateRange="updateRange"/>
           </q-tab-panel>
 
@@ -68,7 +69,7 @@ export default {
       player: new Audio(),
       isPlaying: false,
       currentIndex: 0,
-      tab: "playing-music",
+      tab: 'playing-music',
       currentRange: {
         min: 0,
         max: 0,
@@ -131,7 +132,7 @@ export default {
       }
     },
     play: function() {
-      if(this.tab === "creating-range")
+      if(this.tab === 'creating-range')
         this.seekTo(this.currentRange.min);
       this.player.play()
       this.isPlaying = true;
@@ -148,7 +149,6 @@ export default {
       if(this.currentIndex < 0) {
         this.currentIndex = this.songs.length - 1;
       }
-
       this.player.src = this.songs[this.currentIndex].src;
     },
     next: function() {
@@ -164,7 +164,7 @@ export default {
     seekTo: function(time) {
       // this.player.fastSeek(time);
       this.player.currentTime = time;
-      this.time.currenttime = time;
+      this.time.currentTime = time;
     },
     updateRange: function(value) {
       console.log(value);
