@@ -33,9 +33,6 @@ export default {
             stepVal: 0.1,
         }
     },
-    created: function() {
-        // this.range.max = this.duration;
-    },
     computed: {
         startTimeFormat: function() {
             return this.formatTime(this.range.min);
@@ -45,13 +42,13 @@ export default {
         }
     },
     watch: {
-        currentIndex: {
-            handler: function(newIndex, oldIndex) {
-                console.log(`Updated: ${JSON.stringify(newIndex)} -> ${JSON.stringify(oldIndex)}`);
+        'time.duration': {
+            handler: function(newDuration, oldDuration) {
+                console.log(`Duration updatat: ${oldDuration} -> ${newDuration}`);
                 this.range.min = 0;
-                this.range.max = this.time.duration;
+                this.range.max = newDuration;
             }
-        },
+        }
     },
     methods: {
         formatTime: function(time) {

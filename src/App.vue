@@ -167,7 +167,6 @@ export default {
       this.time.currentTime = time;
     },
     updateRange: function(value) {
-      console.log(value);
       this.currentRange.min = value.min;
       this.currentRange.max = value.max;
     },
