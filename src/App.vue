@@ -186,6 +186,23 @@ export default {
     },
     addFile: function(files) {
       console.log(files);
+      const musicMetadata = require('music-metadata-browser');
+
+      for(let i = 0; i < files.length; i++) {
+        musicMetadata.parseBlob(files[i]).then(metadata => {
+          // Grab relavent metadata from the `common` object.
+          const common = metadata.common;
+          // src="data:<format>;base64, <your byte array in base64>">
+          let imgData = `data:${common.picture[0].format};base64, ${common.picture[0].data.toString('base64')}`
+          let srcUrl = URL.createObjectURL(files[i]);
+          this.songs.push({
+            artist: common.artist,
+            title: common.title,
+            src: srcUrl,
+            img: imgData,
+          });
+        });
+      }
     },
     rejectFile: function(rejectedFiles) {
       console.log(rejectedFiles);
