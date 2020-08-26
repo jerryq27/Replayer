@@ -24,7 +24,7 @@
             rounded
             outlined
             multiple
-            accept=".mp3, .m4a, .ogg"
+            accept=".mp3, .m4a, .ogg, .wav"
             v-model="inputFiles"
             v-bind:max-files="maxFiles"
             v-on:input="addFile"
@@ -112,7 +112,12 @@ export default {
           src: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/KieLoKaz/Free_Ganymed/KieLoKaz_-_07_-_Alte_Herren_Kielokaz_ID_364.mp3',
           img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/KieLoKaz_-_Free_Ganymed_-_20190912113845208.jpg',
         },
-      ]
+      ],
+      defaults: {
+        artist: 'Unknown',
+        title: 'Unknown',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/3/3c/No-album-art.png'
+      }
     }
   },
   created: function() {
@@ -185,16 +190,18 @@ export default {
       this.currentRange.max = value.max;
     },
     addFile: function(files) {
-      console.log(files);
       const musicMetadata = require('music-metadata-browser');
 
       for(let i = 0; i < files.length; i++) {
         musicMetadata.parseBlob(files[i]).then(metadata => {
+          let srcUrl = URL.createObjectURL(files[i]);
           // Grab relavent metadata from the `common` object.
           const common = metadata.common;
           // src="data:<format>;base64, <your byte array in base64>">
-          let imgData = `data:${common.picture[0].format};base64, ${common.picture[0].data.toString('base64')}`
-          let srcUrl = URL.createObjectURL(files[i]);
+          let imgData;
+          if(common.picture) imgData = `data:${common.picture[0].format};base64, ${common.picture[0].data.toString('base64')}`;
+          else imgData = this.defaults.img;
+
           this.songs.push({
             artist: common.artist,
             title: common.title,
