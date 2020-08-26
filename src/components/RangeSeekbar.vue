@@ -5,8 +5,8 @@
         <q-range class="col-xs-10 col-sm-8"
             color="green"
             label
-            v-bind:left-label-value="startTimeFormat"
-            v-bind:right-label-value="endTimeFormat"
+            v-bind:left-label-value="leftHandle"
+            v-bind:right-label-value="rightHandle"
             v-bind:min="0"
             v-bind:max="time.duration"
             v-model="range"
@@ -30,7 +30,7 @@ export default {
                 min: 0,
                 max: this.time.duration,
             },
-            stepVal: 0.1,
+            stepVal: 0.01,
         }
     },
     computed: {
@@ -39,6 +39,12 @@ export default {
         },
         endTimeFormat: function() {
             return this.formatTime(this.range.max);
+        },
+        leftHandle: function() {
+            return this.formatPreciseTime(this.range.min);
+        },
+        rightHandle: function() {
+            return this.formatPreciseTime(this.range.max);
         }
     },
     watch: {
@@ -59,6 +65,13 @@ export default {
             
             if(sec < 10) return `${min}:0${sec}`;
             else return `${min}:${sec}`;
+        },
+        formatPreciseTime(time) {
+            let timeString = this.formatTime(time)
+            let millisecs = Math.floor((time%1) * 1000)
+
+            if(millisecs < 100) return `${timeString}.0${millisecs}`
+            else return `${timeString}.${millisecs}`;
         },
         updateRange: function(value) {
             this.range.min = value.min;
