@@ -1,23 +1,23 @@
-replayer/.DS_Store
-replayer/node_modules
-replayer//dist
+.DS_Store
+node_modules
+/dist
 
 
 # local env files
-replayer/.env.local
-replayer/.env.*.local
+.env.local
+.env.*.local
 
 # Log files
-replayer/npm-debug.log*
-replayer/yarn-debug.log*
-replayer/yarn-error.log*
-replayer/pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Editor directories and files
-replayer/.idea
-replayer/.vscode
-replayer/*.suo
-replayer/*.ntvs*
-replayer/*.njsproj
-replayer/*.sln
-replayer/*.sw?
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
