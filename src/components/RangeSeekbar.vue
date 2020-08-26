@@ -1,18 +1,20 @@
 <template>
 
-    <q-card-section class="row">
-        <span class="col-xs-1 col-sm-2 text-center q-pr-sm">{{ startTimeFormat }}</span>
-        <q-range class="col-xs-10 col-sm-8"
-            color="green"
-            label
-            v-bind:left-label-value="leftHandle"
-            v-bind:right-label-value="rightHandle"
-            v-bind:min="0"
-            v-bind:max="time.duration"
-            v-model="range"
-            v-bind:step="stepVal"
-            v-on:change="updateRange"/>
-        <span class="col-xs-1 col-sm-2 text-center q-pl-sm">{{ endTimeFormat }}</span>
+    <q-card-section>
+        <div class="row">
+            <span class="col-xs-1 col-sm-2 text-center q-pr-md">{{ startTimeFormat }}</span>
+            <q-range class="col-xs-10 col-sm-8"
+                color="green"
+                label
+                v-bind:left-label-value="leftHandle"
+                v-bind:right-label-value="rightHandle"
+                v-bind:min="0"
+                v-bind:max="time.duration"
+                v-model="range"
+                v-bind:step="stepVal"
+                v-on:change="updateRange"/>
+            <span class="col-xs-1 col-sm-2 text-center q-pl-md">{{ endTimeFormat }}</span>
+        </div>
     </q-card-section>
 
 </template>
@@ -35,7 +37,8 @@ export default {
     },
     computed: {
         startTimeFormat: function() {
-            return this.formatTime(this.range.min);
+            // Updates time when playing range.. need to rework this.
+            return this.formatTime(this.time.currentTime);
         },
         endTimeFormat: function() {
             return this.formatTime(this.range.max);
