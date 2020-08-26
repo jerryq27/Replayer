@@ -18,6 +18,18 @@
       <q-card class="content-card col-xs-12 col-sm-8 col-md-4">
 
         <SongInfo v-bind:song="songs[currentIndex]"/>
+        <q-card-actions>
+          <q-file
+            label="Add files.."
+            rounded
+            outlined
+            multiple
+            accept=".mp3, .m4a, .ogg"
+            v-model="inputFiles"
+            v-bind:max-files="maxFiles"
+            v-on:input="addFile"
+            v-on:rejected="rejectFile"/>
+        </q-card-actions>
 
         <q-tabs v-model="tab" narrow-indicator dense>
           <q-tab name="playing-music" icon="play_circle_outlined"/>
@@ -79,6 +91,8 @@ export default {
         currentTime: 0,
         duration: 0,
       },
+      maxFiles: 3,
+      inputFiles: [],
       songs: [
         {
           artist: 'Scott Holmes',
@@ -170,6 +184,29 @@ export default {
       this.currentRange.min = value.min;
       this.currentRange.max = value.max;
     },
+    addFile: function(files) {
+      console.log(files);
+    },
+    rejectFile: function(rejectedFiles) {
+      console.log(rejectedFiles);
+      // this.$q.notify({
+      //   type: 'negative',
+      //   message: `${files.name} needs to be an .mp3, .m4a, or .ogg format!`
+      // });
+      let isFormatError = false;
+      let isLengthError = false;
+
+      let names = rejectedFiles.reduce((names, item) => {
+        isLengthError = item.failedPropValidation === 'max-files';
+        isFormatError = item.failedPropValidation === 'accept';
+        return item.file.name + ',';
+      }, '');
+      names = `[ ${names.slice(0, names.length - 1)} ]`
+      console.log(names);
+
+      if(isLengthError) alert(`The following file(s): \n${names}\nonly a maximum of 3 files allowed!`);
+      if(isFormatError) alert(`The following file(s): \n${names}\nneed to be an .mp3, .m4a, or .ogg format!`);
+    }
   },
   components: {
     SongInfo,
