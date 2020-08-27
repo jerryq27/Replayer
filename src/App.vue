@@ -50,13 +50,26 @@
           </q-tab-panel>
 
           <q-tab-panel name="creating-range">
-            <PlayerControls
-              v-bind:isPlaying="isPlaying"
-              v-bind:tab="tab"
-              v-on:handleEvent="handleEvent"/>
+            <div class="row">
+              <PlayerControls class="col-xs-11"
+                v-bind:isPlaying="isPlaying"
+                v-bind:tab="tab"
+                v-on:handleEvent="handleEvent"/>
+              <q-btn flat
+                class="col-xs-1"
+                icon="more_vert"
+                color="green">
+                  <q-menu>
+                    <div class="row no-wrap q-pa-md">
+                      <q-toggle color="green" v-model="useMillisecs" label="Use Milliseconds" />
+                    </div>
+                  </q-menu>
+              </q-btn>
+            </div>
             <RangeSeekbar
               v-bind:time="time"
               v-bind:currentIndex="currentIndex"
+              v-bind:useMillisecs="useMillisecs"
               v-on:updateRange="updateRange"/>
           </q-tab-panel>
 
@@ -82,6 +95,7 @@ export default {
     return {
       player: new Audio(),
       isPlaying: false,
+      useMillisecs: false,
       currentIndex: 0,
       tab: 'playing-music',
       currentRange: {
