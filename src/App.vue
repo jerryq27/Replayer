@@ -169,6 +169,11 @@ export default {
         this.currentIndex = this.songs.length - 1;
       }
       this.player.src = this.songs[this.currentIndex].src;
+
+      if(this.tab === 'creating-range') {
+        this.currentRange.min = 0;
+        this.currentRange.max = this.time.duration;
+      }
     },
     next: function() {
       if(this.isPlaying) {
@@ -179,6 +184,11 @@ export default {
         this.currentIndex = 0;
       }
       this.player.src = this.songs[this.currentIndex].src;
+
+      if(this.tab === 'creating-range') {
+        this.currentRange.min = 0;
+        this.currentRange.max = this.time.duration;
+      }
     },
     seekTo: function(time) {
       // this.player.fastSeek(time);
@@ -193,8 +203,10 @@ export default {
       const musicMetadata = require('music-metadata-browser');
 
       for(let i = 0; i < files.length; i++) {
+        this.defaults.title = files[i].name;
         musicMetadata.parseBlob(files[i]).then(metadata => {
           let srcUrl = URL.createObjectURL(files[i]);
+
           // Grab relavent metadata from the `common` object.
           const common = metadata.common;
           // src="data:<format>;base64, <your byte array in base64>">
@@ -203,8 +215,8 @@ export default {
           else imgData = this.defaults.img;
 
           this.songs.push({
-            artist: common.artist,
-            title: common.title,
+            artist: common.artist || this.defaults.artist,
+            title: common.title || this.defaults.title,
             src: srcUrl,
             img: imgData,
           });
