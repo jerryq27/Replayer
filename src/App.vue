@@ -52,6 +52,7 @@
           <q-tab-panel name="creating-range">
             <div class="row">
               <PlayerControls class="col-xs-11"
+                v-bind:disabled="disableButtons"
                 v-bind:isPlaying="isPlaying"
                 v-bind:tab="tab"
                 v-on:handleEvent="handleEvent"/>
@@ -119,6 +120,7 @@ export default {
       player: new Audio(),
       isPlaying: false,
       useMillisecs: false,
+      disableButtons: false,
       replayGap: 0,
       gapValues: [
         { label: 'No gap', value: 0 },
@@ -175,12 +177,10 @@ export default {
       replayer.time.duration = this.duration;
     });
     this.player.addEventListener('timeupdate', function() {
-      if(replayer.tab === 'creating-range') {
-        if(this.currentTime >= replayer.currentRange.max) {
-          replayer.time.currentTime = this.currentTime = replayer.currentRange.min;
-        }
-      } 
       replayer.time.currentTime = this.currentTime;
+      if(replayer.tab === 'creating-range') {
+        replayer.replay()
+      } 
     });
   },
   methods: {
@@ -200,6 +200,19 @@ export default {
         this.seekTo(this.currentRange.min);
       this.player.play()
       this.isPlaying = true;
+    },
+    replay: function() {
+        if(this.time.currentTime >= this.currentRange.max) {
+          this.time.currentTime = this.player.currentTime = this.currentRange.min;
+          if(this.replayGap != 0) {
+            this.pause();
+            this.disableButtons = true;
+            setTimeout(() => {
+              this.disableButtons = false;
+              this.play();
+            }, this.replayGap * 1000);
+          }
+        }
     },
     pause: function() {
       this.player.pause()
