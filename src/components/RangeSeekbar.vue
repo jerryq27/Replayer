@@ -25,6 +25,7 @@ export default {
     props: {
         time: Object,
         currentIndex: Number,
+        useMillisecs: Boolean,
     },
     data: function() {
         return {
@@ -32,7 +33,7 @@ export default {
                 min: 0,
                 max: this.time.duration,
             },
-            stepVal: 0.01,
+            stepVal: 0.1,
         }
     },
     computed: {
@@ -44,10 +45,10 @@ export default {
             return this.formatTime(this.range.max);
         },
         leftHandle: function() {
-            return this.formatPreciseTime(this.range.min);
+            return this.useMillisecs? this.formatPreciseTime(this.range.min) : this.formatTime(this.range.min);
         },
         rightHandle: function() {
-            return this.formatPreciseTime(this.range.max);
+            return this.useMillisecs? this.formatPreciseTime(this.range.max) : this.formatTime(this.range.max);
         }
     },
     watch: {
@@ -56,6 +57,11 @@ export default {
                 console.log(`Duration updatat: ${oldDuration} -> ${newDuration}`);
                 this.range.min = 0;
                 this.range.max = newDuration;
+            }
+        },
+        useMillisecs: {
+            handler: function(usingMs) {
+                this.stepVal = usingMs? 0.001 : 0.1;
             }
         }
     },
