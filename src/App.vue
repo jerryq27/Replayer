@@ -60,9 +60,32 @@
                 icon="more_vert"
                 color="green">
                   <q-menu>
-                    <div class="row no-wrap q-pa-md">
-                      <q-toggle color="green" v-model="useMillisecs" label="Use Milliseconds" />
-                    </div>
+
+                    <q-item >
+                      <div class="row no-wrap q-pa-xs">
+                        <q-toggle v-close-popup color="green" v-model="useMillisecs" label="Use Milliseconds"/>
+                      </div>
+                    </q-item>
+                    
+                    <q-item clickable>
+                      <q-item-section side>
+                        <q-icon name="keyboard_arrow_left" />
+                      </q-item-section>
+                      <q-item-section>Replay gap</q-item-section>
+                      <q-menu anchor="top left" self="top right">
+                        <q-item>
+                          <q-option-group
+                            color="green"
+                            type="radio"
+                            v-bind:options="gapValues"
+                            v-model="replayGap"/>
+                        </q-item>
+                      </q-menu>
+                    </q-item>
+                    
+                    <!-- <q-item>
+                    </q-item>  -->
+                  
                   </q-menu>
               </q-btn>
             </div>
@@ -96,6 +119,12 @@ export default {
       player: new Audio(),
       isPlaying: false,
       useMillisecs: false,
+      replayGap: 0,
+      gapValues: [
+        { label: 'No gap', value: 0 },
+        { label: '3 seconds', value: 3 },
+        { label: '5 seconds', value: 5 },
+      ],
       currentIndex: 0,
       tab: 'playing-music',
       currentRange: {
