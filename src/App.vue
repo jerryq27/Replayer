@@ -31,11 +31,13 @@
             v-on:rejected="rejectFile"/>
         </q-card-actions>
 
-        <q-tabs v-model="tab" narrow-indicator dense>
-          <q-tab name="playing-music" icon="play_circle_outlined"/>
-          <q-tab name="creating-range" icon="loop"/>
+        <q-tabs narrow-indicator dense
+          v-model="tab"
+          align="justify">
+            <q-tab name="playing-music" icon="play_circle_outlined"/>
+            <q-tab name="creating-range" icon="loop"/>
         </q-tabs>
-        <q-tab-panels v-model="tab" animated>
+        <q-tab-panels animated v-model="tab">
 
           <q-tab-panel name="playing-music">
             <PlayerControls
