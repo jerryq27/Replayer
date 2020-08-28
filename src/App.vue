@@ -256,6 +256,9 @@ export default {
     updateRange: function(value) {
       this.currentRange.min = value.min;
       this.currentRange.max = value.max;
+
+      // To update the RangeSeekbar start time.
+      this.player.currentTime = value.min;
     },
     addFile: function(files) {
       const musicMetadata = require('music-metadata-browser');
