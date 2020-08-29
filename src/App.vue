@@ -214,8 +214,8 @@ export default {
       }
     },
     handleAlbumSwipe: function(event) {
-      if(event.direction === 'right') this.next();
-      else if(event.direction === 'left') this.prev();
+      if(event.direction === 'right') this.prev();
+      else if(event.direction === 'left') this.next();
     },
     handleEvent: function(event) {
       if(event === 'play-pause') {
