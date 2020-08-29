@@ -105,6 +105,7 @@
               </q-btn>
             </div>
             <RangeSeekbar
+              v-model="currentRange"
               v-bind:time="time"
               v-bind:currentIndex="currentIndex"
               v-bind:useMillisecs="useMillisecs"

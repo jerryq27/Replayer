@@ -6,13 +6,12 @@
             <q-range class="col-8"
                 color="green"
                 label
+                v-model="currentRangeVal"
                 v-bind:left-label-value="leftHandle"
                 v-bind:right-label-value="rightHandle"
                 v-bind:min="0"
                 v-bind:max="time.duration"
-                v-model="range"
-                v-bind:step="stepVal"
-                v-on:change="updateRange"/>
+                v-bind:step="stepVal"/>
             <span class="col-2 text-center">{{ endTimeFormat }}</span>
         </div>
     </q-card-section>
@@ -24,41 +23,46 @@ export default {
     name: 'RangeSeekbar',
     props: {
         time: Object,
+        value: Object,
         currentIndex: Number,
         useMillisecs: Boolean,
     },
     data: function() {
         return {
-            range: {
-                min: 0,
-                max: this.time.duration,
-            },
             stepVal: 0.1,
         }
     },
     computed: {
+        currentRangeVal: {
+            get: function() {
+                return this.value;
+            },
+            set: function(newRangeVal) {
+                this.$emit('input', newRangeVal)
+            }
+        },
         startTimeFormat: function() {
             // Updates time when playing range.. need to rework this.
             return this.formatTime(this.time.currentTime);
         },
         endTimeFormat: function() {
-            return this.formatTime(this.range.max);
+            return this.formatTime(this.value.max);
         },
         leftHandle: function() {
-            return this.useMillisecs? this.formatPreciseTime(this.range.min) : this.formatTime(this.range.min);
+            return this.useMillisecs? this.formatPreciseTime(this.value.min) : this.formatTime(this.value.min);
         },
         rightHandle: function() {
-            return this.useMillisecs? this.formatPreciseTime(this.range.max) : this.formatTime(this.range.max);
+            return this.useMillisecs? this.formatPreciseTime(this.value.max) : this.formatTime(this.value.max);
         }
     },
     watch: {
-        'time.duration': {
-            handler: function(newDuration, oldDuration) {
-                console.log(`Duration updatat: ${oldDuration} -> ${newDuration}`);
-                this.range.min = 0;
-                this.range.max = newDuration;
-            }
-        },
+        // 'time.duration': {
+        //     handler: function(newDuration, oldDuration) {
+        //         console.log(`Duration updatat: ${oldDuration} -> ${newDuration}`);
+        //         this.value.min = 0;
+        //         this.value.max = newDuration;
+        //     }
+        // },
         useMillisecs: {
             handler: function(usingMs) {
                 this.stepVal = usingMs? 0.001 : 0.1;
@@ -83,8 +87,8 @@ export default {
             else return `${timeString}.${millisecs}`;
         },
         updateRange: function(value) {
-            this.range.min = value.min;
-            this.range.max = value.max;
+            this.value.min = value.min;
+            this.value.max = value.max;
             this.$emit('updateRange', value);
         }
     }
