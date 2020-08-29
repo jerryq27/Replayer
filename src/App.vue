@@ -130,7 +130,7 @@ export default {
   name: 'App',
   data: function() { 
     return {
-      videoUrl: 'https://google.com',
+      videoUrl: 'http://i8.ae/7E9tw',
       player: new Audio(),
       isPlaying: false,
       useMillisecs: false,
@@ -167,10 +167,10 @@ export default {
           img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/Yung_Kartz_-_August_2019_-_20190831225103049.jpg',
         },
         {
-          artist: 'KieLoKaz',
-          title: 'Alte Herren Kielokaz',
-          src: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/KieLoKaz/Free_Ganymed/KieLoKaz_-_07_-_Alte_Herren_Kielokaz_ID_364.mp3',
-          img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/KieLoKaz_-_Free_Ganymed_-_20190912113845208.jpg',
+          artist: 'Broke For Free',
+          title: 'Something Elated',
+          src: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Broke_For_Free/Something_EP/Broke_For_Free_-_05_-_Something_Elated.mp3',
+          img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/Broke_For_Free_-_Something_EP_-_20110708115706855.jpg',
         },
       ],
       defaults: {
