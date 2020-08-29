@@ -4,7 +4,7 @@
     <span class="col-2 text-center">{{ updateCurrentTime() }}</span>
     <q-slider class="col-8"
         v-on:change="informSeek"
-        v-bind:value="time.currentTime"
+        v-model="currentTimeVal"
         v-bind:step="stepVal"
         v-bind:min="0"
         v-bind:max="time.duration"/>
@@ -18,6 +18,7 @@ export default {
     name: 'Seekbar',
     props: {
         time: Object,
+        value: Number,
     },
     data: function() {
         return {
@@ -25,6 +26,14 @@ export default {
         }
     },
     computed: {
+        currentTimeVal: {
+            get: function() {
+                return this.value;
+            },
+            set: function(newCurrentTimeVal) {
+                this.$emit('input', newCurrentTimeVal);
+            }
+        },
         formatDuration: function() {
             let min = Math.floor(this.time.duration/60);
             let sec = Math.floor(this.time.duration%60);

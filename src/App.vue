@@ -58,6 +58,7 @@
               v-bind:tab="tab"
               v-on:handleEvent="handleEvent"/>
             <Seekbar
+              v-model="time.currentTime"
               v-bind:time="time"
               v-on:seekTo="seekTo"/>
           </q-tab-panel>
