@@ -36,6 +36,7 @@
             label="Add file.."
             rounded
             outlined
+            clearable
             accept=".mp3, .m4a, .ogg, .wav"
             v-model="inputFiles"
             v-on:input="addFile"
@@ -318,9 +319,8 @@ export default {
 
         this.$q.notify({
           color: 'primary',
-          message: `"${newSong.title}" has been added!`
+          message: `"${file.name}" has been added!`
         });
-        // alert(`${newSong.title} has been added!`);
       });
     },
     rejectFile: function(info) {
