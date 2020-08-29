@@ -11,13 +11,26 @@
           </q-avatar> -->
           Replayer
         </q-toolbar-title>
+        
+        <q-btn flat dense icon="more_vert">
+
+          <q-menu>
+            <q-list class="text-no-wrap">
+              <q-item clickable v-close-popup>
+                <q-item-section v-on:click="openVideo">Routine idea</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+
+        </q-btn>
+
       </q-toolbar>
     </q-header>
 
     <q-page-container class="row justify-center">
       <q-card class="content-card col-xs-12 col-sm-8 col-md-4">
 
-        <SongInfo v-bind:song="songs[currentIndex]"/>
+        <SongInfo v-touch-swipe.mouse.left.right="handleAlbumSwipe" v-bind:song="songs[currentIndex]"/>
         <q-card-actions>
           <q-file
             label="Add files.."
@@ -32,12 +45,13 @@
         </q-card-actions>
 
         <q-tabs narrow-indicator dense
+          v-touch-swipe.mouse.left.right="handleTabSwipe"
           v-model="tab"
           align="justify">
             <q-tab name="playing-music" icon="play_circle_outlined"/>
             <q-tab name="creating-range" icon="loop"/>
         </q-tabs>
-        <q-tab-panels animated v-model="tab">
+        <q-tab-panels animated v-model="tab" v-touch-swipe.mouse.left.right="handleTabSwipe">
 
           <q-tab-panel name="playing-music">
             <PlayerControls
@@ -117,6 +131,7 @@ export default {
   name: 'App',
   data: function() { 
     return {
+      videoUrl: 'https://google.com',
       player: new Audio(),
       isPlaying: false,
       useMillisecs: false,
@@ -188,6 +203,21 @@ export default {
     this.player.addEventListener('pause', this.pause);
   },
   methods: {
+    openVideo: function() {
+      window.open(this.videoUrl, '_blank').focus();
+    },
+    handleTabSwipe: function(event) {
+      if(event.direction === 'right' && this.tab !== 'playing-music') {
+        this.tab = 'playing-music';
+      }
+      else if(event.direction === 'left' && this.tab !== 'creating-range') {
+        this.tab = 'creating-range';
+      }
+    },
+    handleAlbumSwipe: function(event) {
+      if(event.direction === 'right') this.next();
+      else if(event.direction === 'left') this.prev();
+    },
     handleEvent: function(event) {
       if(event === 'play-pause') {
         this.isPlaying? this.pause() : this.play();
