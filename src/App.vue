@@ -319,7 +319,8 @@ export default {
 
         this.$q.notify({
           color: 'primary',
-          message: `"${file.name}" has been added!`
+          message: `"${file.name}" has been added!`,
+          actions: [{ icon: 'close', color: 'white' }],
         });
       });
     },
@@ -329,7 +330,8 @@ export default {
       
       this.$q.notify({
         type: 'negative',
-        message: `"${rejectedFile}" needs to be an .mp3, .m4a, or .ogg file!`
+        message: `"${rejectedFile}" needs to be an .mp3, .m4a, or .ogg file!`,
+        actions: [{ icon: 'close', color: 'white' }],
       });
     }
   },
