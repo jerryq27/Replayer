@@ -56,13 +56,6 @@ export default {
         }
     },
     watch: {
-        // 'time.duration': {
-        //     handler: function(newDuration, oldDuration) {
-        //         console.log(`Duration updatat: ${oldDuration} -> ${newDuration}`);
-        //         this.value.min = 0;
-        //         this.value.max = newDuration;
-        //     }
-        // },
         useMillisecs: {
             handler: function(usingMs) {
                 this.stepVal = usingMs? 0.001 : 0.1;
@@ -86,11 +79,6 @@ export default {
             if(millisecs < 100) return `${timeString}.0${millisecs}`
             else return `${timeString}.${millisecs}`;
         },
-        updateRange: function(value) {
-            this.value.min = value.min;
-            this.value.max = value.max;
-            this.$emit('updateRange', value);
-        }
     }
 }
 </script>

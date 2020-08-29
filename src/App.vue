@@ -108,8 +108,7 @@
               v-model="currentRange"
               v-bind:time="time"
               v-bind:currentIndex="currentIndex"
-              v-bind:useMillisecs="useMillisecs"
-              v-on:updateRange="updateRange"/>
+              v-bind:useMillisecs="useMillisecs"/>
           </q-tab-panel>
 
         </q-tab-panels>
@@ -287,13 +286,6 @@ export default {
       this.player.currentTime = time;
       this.time.currentTime = time;
     },
-    updateRange: function(value) {
-      this.currentRange.min = value.min;
-      this.currentRange.max = value.max;
-
-      // To update the RangeSeekbar start time.
-      this.player.currentTime = value.min;
-    },
     addFile: function(file) {
       const musicMetadata = require('music-metadata-browser');
 
@@ -335,6 +327,13 @@ export default {
         message: `"${rejectedFile}" needs to be an .mp3, .m4a, or .ogg file!`,
         actions: [{ icon: 'close', color: 'white' }],
       });
+    }
+  },
+  watch: {
+    'currentRange.min': {
+      handler: function(newMin) {
+        this.time.currentTime = newMin;
+      }
     }
   },
   components: {
