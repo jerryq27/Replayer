@@ -1,14 +1,14 @@
 <template>
 
   <q-card-section class="row">
-    <span class="col-xs-1 col-sm-2 text-center q-pr-sm">{{ updateCurrentTime() }}</span>
-    <q-slider class="col-xs-10 col-sm-8"
+    <span class="col-2 text-center">{{ updateCurrentTime() }}</span>
+    <q-slider class="col-8"
         v-on:change="informSeek"
         v-bind:value="time.currentTime"
         v-bind:step="stepVal"
         v-bind:min="0"
         v-bind:max="time.duration"/>
-    <span class="col-xs-1 col-sm-2 text-center q-pl-sm">{{ formatDuration }}</span>
+    <span class="col-2 text-center">{{ formatDuration }}</span>
   </q-card-section>
   
 </template>
