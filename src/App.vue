@@ -33,13 +33,11 @@
         <SongInfo v-touch-swipe.mouse.left.right="handleAlbumSwipe" v-bind:song="songs[currentIndex]"/>
         <q-card-actions>
           <q-file
-            label="Add files.."
+            label="Add file.."
             rounded
             outlined
-            multiple
             accept=".mp3, .m4a, .ogg, .wav"
             v-model="inputFiles"
-            v-bind:max-files="maxFiles"
             v-on:input="addFile"
             v-on:rejected="rejectFile"/>
         </q-card-actions>
@@ -153,7 +151,6 @@ export default {
         currentTime: 0,
         duration: 0,
       },
-      maxFiles: 3,
       inputFiles: [],
       songs: [
         {
@@ -294,49 +291,46 @@ export default {
       // To update the RangeSeekbar start time.
       this.player.currentTime = value.min;
     },
-    addFile: function(files) {
+    addFile: function(file) {
       const musicMetadata = require('music-metadata-browser');
 
-      for(let i = 0; i < files.length; i++) {
-        this.defaults.title = files[i].name;
-        musicMetadata.parseBlob(files[i]).then(metadata => {
-          let srcUrl = URL.createObjectURL(files[i]);
+      this.defaults.title = file.name;
+      musicMetadata.parseBlob(file).then(metadata => {
+        let srcUrl = URL.createObjectURL(file);
 
-          // Grab relavent metadata from the `common` object.
-          const common = metadata.common;
-          // src="data:<format>;base64, <your byte array in base64>">
-          let imgData;
-          if(common.picture) imgData = `data:${common.picture[0].format};base64, ${common.picture[0].data.toString('base64')}`;
-          else imgData = this.defaults.img;
+        // Grab relavent metadata from the `common` object.
+        const common = metadata.common;
+        // src="data:<format>;base64, <your byte array in base64>">
+        let imgData;
+        if(common.picture) imgData = `data:${common.picture[0].format};base64, ${common.picture[0].data.toString('base64')}`;
+        else imgData = this.defaults.img;
 
-          this.songs.push({
-            artist: common.artist || this.defaults.artist,
-            title: common.title || this.defaults.title,
-            src: srcUrl,
-            img: imgData,
-          });
+        const newSong = {
+          artist: common.artist || this.defaults.artist,
+          title: common.title || this.defaults.title,
+          src: srcUrl,
+          img: imgData,
+        };
+
+        this.songs.push(newSong);
+        this.currentIndex = this.songs.indexOf(newSong);
+        this.player.src = this.songs[this.currentIndex].src;
+
+        this.$q.notify({
+          color: 'primary',
+          message: `"${newSong.title}" has been added!`
         });
-      }
+        // alert(`${newSong.title} has been added!`);
+      });
     },
-    rejectFile: function(rejectedFiles) {
-      console.log(rejectedFiles);
-      // this.$q.notify({
-      //   type: 'negative',
-      //   message: `${files.name} needs to be an .mp3, .m4a, or .ogg format!`
-      // });
-      let isFormatError = false;
-      let isLengthError = false;
-
-      let names = rejectedFiles.reduce((names, item) => {
-        isLengthError = item.failedPropValidation === 'max-files';
-        isFormatError = item.failedPropValidation === 'accept';
-        return item.file.name + ',';
-      }, '');
-      names = `[ ${names.slice(0, names.length - 1)} ]`
-      console.log(names);
-
-      if(isLengthError) alert(`The following file(s): \n${names}\nonly a maximum of 3 files allowed!`);
-      if(isFormatError) alert(`The following file(s): \n${names}\nneed to be an .mp3, .m4a, or .ogg format!`);
+    rejectFile: function(info) {
+      console.log(info);
+      const rejectedFile = info[0].file.name;
+      
+      this.$q.notify({
+        type: 'negative',
+        message: `"${rejectedFile}" needs to be an .mp3, .m4a, or .ogg file!`
+      });
     }
   },
   components: {
