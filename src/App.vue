@@ -187,8 +187,8 @@ export default {
 
     let replayer = this;
     this.player.addEventListener('loadeddata', function() {
-      replayer.duration = this.duration;
       replayer.time.duration = this.duration;
+      replayer.currentRange.max = this.duration;
     });
     this.player.addEventListener('timeupdate', function() {
       replayer.time.currentTime = this.currentTime;
