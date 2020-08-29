@@ -182,6 +182,10 @@ export default {
         replayer.replay()
       } 
     });
+
+    // Fixes the sync between play/pause on mobile
+    this.player.addEventListener('play', this.play);
+    this.player.addEventListener('pause', this.pause);
   },
   methods: {
     handleEvent: function(event) {
