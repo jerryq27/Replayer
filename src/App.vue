@@ -17,7 +17,10 @@
           <q-menu>
             <q-list class="text-no-wrap">
               <q-item clickable v-close-popup>
-                <q-item-section v-on:click="openVideo">Routine idea</q-item-section>
+                <q-item-section avatar>
+                  <q-icon name="movie"/>
+                </q-item-section>
+                <q-item-section v-on:click="openVideo">"Routines" feature idea</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
