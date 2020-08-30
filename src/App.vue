@@ -46,7 +46,7 @@
             v-on:rejected="rejectFile"/>
         </q-card-actions>
 
-        <q-tabs narrow-indicator dense
+        <q-tabs dense
           v-touch-swipe.mouse.left.right="handleTabSwipe"
           v-model="tab"
           align="justify">
