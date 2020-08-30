@@ -196,6 +196,17 @@ export default {
         replayer.replay()
       } 
     });
+    this.player.addEventListener('ended', function() {
+      if(replayer.tab === 'creating-range') {
+        replayer.play();
+      }
+      else {
+        setTimeout(() => {
+          replayer.next();
+          replayer.play();
+        }, 250);
+      }
+    });
 
     // Fixes the sync between play/pause on mobile
     this.player.addEventListener('play', this.play);
