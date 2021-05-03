@@ -134,7 +134,7 @@ export default {
   name: 'App',
   data: function() { 
     return {
-      videoUrl: 'http://i8.ae/7E9tw',
+      videoUrl: 'https://drive.google.com/file/d/1IOgjzIphEWv33ocA0yxVrt9vb5RbBIVz/view?usp=sharing',
       player: new Audio(),
       isPlaying: false,
       useMillisecs: false,
@@ -165,10 +165,10 @@ export default {
           img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/Scott_Holmes_-_Inspiring__Upbeat_Music_-_2019090383732068.jpg',
         },
         {
-          artist: 'Yung Kartz',
-          title: 'Picture Perfect',
-          src: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Yung_Kartz/August_2019/Yung_Kartz_-_05_-_Picture_Perfect.mp3',
-          img: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/images/albums/Yung_Kartz_-_August_2019_-_20190831225103049.jpg',
+          artist: 'Eaters',
+          title: 'Help Us',
+          src: 'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/AwABY5OV8yvwqjaApf3UvIDtzEeOQTaVik0PNhj6.mp3',
+          img: 'https://freemusicarchive.org/image?file=image%2FSIHwzXKJ7dx6ziyQprPZf9GJsAKIK1jCYoFPsHqs.gif&width=290&height=290&type=image',
         },
         {
           artist: 'Broke For Free',
